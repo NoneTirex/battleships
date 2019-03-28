@@ -17,7 +17,7 @@ public class Map
             {
                 int x = currentPosition.getX();
                 int z = currentPosition.getZ();
-                this.fields[x][z] = new MapShipField(x, z, ship);
+                this.fields[x][z] = new MapShipField(ship);
                 currentPosition = currentPosition.add(ship.getDirection().getPosition());
             }
         }

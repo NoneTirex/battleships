@@ -6,7 +6,7 @@ public class MapShipField extends MapField
 {
     private final Ship ship;
 
-    public MapShipField(int x, int z, Ship ship)
+    public MapShipField(Ship ship)
     {
         this.ship = ship;
     }
