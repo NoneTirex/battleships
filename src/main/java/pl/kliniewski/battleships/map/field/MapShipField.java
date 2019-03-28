@@ -8,7 +8,6 @@ public class MapShipField extends MapField
 
     public MapShipField(int x, int z, Ship ship)
     {
-        super(x, z);
         this.ship = ship;
     }
 

@@ -8,7 +8,7 @@ public class BattleShip
 {
     public BattleShip(MapPosition startPosition, MapDirection direction)
     {
-        super(startPosition, 4, direction);
+        super(startPosition, 5, direction);
     }
 
     @Override

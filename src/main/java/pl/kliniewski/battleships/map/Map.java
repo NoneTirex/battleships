@@ -6,6 +6,8 @@ import pl.kliniewski.battleships.ship.Ship;
 
 public class Map
 {
+    private static final MapField EMPTY_FIELD = new MapField();
+
     private final MapField[][] fields = new MapField[10][10];
 
     public Map(Ship... ships)
@@ -29,8 +31,13 @@ public class Map
         return null;
     }
 
-    public boolean shootIntoField(int x, int z)
+    public MapField getField(int x, int z)
     {
-        return false;
+        return null;
+    }
+
+    public void shootIntoField(int x, int z)
+    {
+
     }
 }
