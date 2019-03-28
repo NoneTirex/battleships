@@ -12,12 +12,13 @@ class MapTests
     @Test
     void addShipToMap()
     {
-        Ship battleShip = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
-        Map map = new Map(battleShip);
+        Ship ship = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
+        Map map = new Map();
+        map.addShip(ship);
 
-        assertEquals(battleShip, map.getShip(5, 5));
-        assertEquals(battleShip, map.getShip(4, 5));
-        assertEquals(battleShip, map.getShip(3, 5));
+        assertEquals(ship, map.getShip(5, 5));
+        assertEquals(ship, map.getShip(4, 5));
+        assertEquals(ship, map.getShip(3, 5));
 
         assertNull(map.getShip(2, 5));
         assertNull(map.getShip(6, 5));

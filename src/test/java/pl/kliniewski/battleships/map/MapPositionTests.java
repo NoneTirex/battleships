@@ -19,6 +19,16 @@ class MapPositionTests
     }
 
     @Test
+    void multiplyPositionByMultiplier()
+    {
+        MapPosition first = new MapPosition(5, 3);
+        MapPosition ratio = first.multiple(3);
+
+        assertEquals(15, ratio.getX());
+        assertEquals(9, ratio.getZ());
+    }
+
+    @Test
     void provideImmutable()
     {
         MapPosition first = new MapPosition(5, 3);

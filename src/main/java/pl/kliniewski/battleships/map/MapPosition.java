@@ -25,4 +25,15 @@ public class MapPosition
     {
         return new MapPosition(this.x + position.getX(), this.z + position.getZ());
     }
+
+    public MapPosition multiple(int multiplier)
+    {
+        return new MapPosition(this.x * multiplier, this.z * multiplier);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "(" + this.x + ", " + this.z + ")";
+    }
 }
