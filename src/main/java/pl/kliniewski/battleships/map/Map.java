@@ -30,8 +30,13 @@ public class Map
 
     public boolean collidedOtherShips(Ship ship)
     {
-        MapPosition currentPosition = ship.getStartPosition();
-        for (int i = 0; i < ship.getSize(); i++)
+        return this.collidedOtherShips(ship.getStartPosition(), ship.getSize(), ship.getDirection());
+    }
+
+    public boolean collidedOtherShips(MapPosition startPosition, int size, MapDirection direction)
+    {
+        MapPosition currentPosition = startPosition;
+        for (int i = 0; i < size; i++)
         {
             int x = currentPosition.getX();
             int z = currentPosition.getZ();
@@ -39,7 +44,7 @@ public class Map
             {
                 return true;
             }
-            currentPosition = currentPosition.add(ship.getDirection().getPosition());
+            currentPosition = currentPosition.add(direction.getPosition());
         }
         return false;
     }
