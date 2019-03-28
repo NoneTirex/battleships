@@ -1,4 +1,4 @@
-package pl.kliniewski.battleships;
+package pl.kliniewski.battleships.map;
 
 import org.junit.jupiter.api.Test;
 import pl.kliniewski.battleships.map.Map;
