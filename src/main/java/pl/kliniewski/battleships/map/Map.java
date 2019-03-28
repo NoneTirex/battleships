@@ -8,19 +8,8 @@ public class Map
 {
     private final MapField[][] fields = new MapField[10][10];
 
-    public Map(Ship... ships)
+    public Map()
     {
-        for (Ship ship : ships)
-        {
-            MapPosition currentPosition = ship.getStartPosition();
-            for (int i = 0; i < ship.getSize(); i++)
-            {
-                int x = currentPosition.getX();
-                int z = currentPosition.getZ();
-                this.fields[x][z] = new MapShipField(ship);
-                currentPosition = currentPosition.add(ship.getDirection().getPosition());
-            }
-        }
         this.fillEmptyFields();
     }
 
@@ -39,6 +28,18 @@ public class Map
         }
     }
 
+    public void addShip(Ship ship)
+    {
+        MapPosition currentPosition = ship.getStartPosition();
+        for (int i = 0; i < ship.getSize(); i++)
+        {
+            int x = currentPosition.getX();
+            int z = currentPosition.getZ();
+            this.fields[x][z] = new MapShipField(ship);
+            currentPosition = currentPosition.add(ship.getDirection().getPosition());
+        }
+    }
+
     public Ship getShip(int x, int z)
     {
         MapField field = this.getField(x, z);
@@ -52,5 +53,10 @@ public class Map
     public MapField getField(int x, int z)
     {
         return this.fields[x][z];
+    }
+
+    public MapField[][] getFields()
+    {
+        return fields;
     }
 }
