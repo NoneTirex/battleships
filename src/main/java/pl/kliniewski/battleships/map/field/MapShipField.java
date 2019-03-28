@@ -22,4 +22,10 @@ public class MapShipField extends MapField
         super.shootField();
         this.ship.shootShip();
     }
+
+    @Override
+    public char toChar()
+    {
+        return this.isAlreadyHit() ? 'X' : '#';
+    }
 }

@@ -18,4 +18,9 @@ public class MapField
     {
         this.alreadyHit = true;
     }
+
+    public char toChar()
+    {
+        return this.alreadyHit ? '.' : ' ';
+    }
 }
