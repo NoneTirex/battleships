@@ -15,14 +15,14 @@ public class Map
 
     private void fillEmptyFields()
     {
-        for (int x = 0; x < this.fields.length; x++)
+        for (int z = 0; z < this.fields.length; z++)
         {
-            MapField[] column = this.fields[x];
-            for (int z = 0; z < column.length; z++)
+            MapField[] column = this.fields[z];
+            for (int x = 0; x < column.length; x++)
             {
-                if (column[z] == null)
+                if (column[x] == null)
                 {
-                    column[z] = new MapField();
+                    column[x] = new MapField();
                 }
             }
         }
@@ -30,6 +30,17 @@ public class Map
 
     public boolean collidedOtherShips(Ship ship)
     {
+        MapPosition currentPosition = ship.getStartPosition();
+        for (int i = 0; i < ship.getSize(); i++)
+        {
+            int x = currentPosition.getX();
+            int z = currentPosition.getZ();
+            if (this.getField(x, z) instanceof MapShipField)
+            {
+                return true;
+            }
+            currentPosition = currentPosition.add(ship.getDirection().getPosition());
+        }
         return false;
     }
 
@@ -40,7 +51,7 @@ public class Map
         {
             int x = currentPosition.getX();
             int z = currentPosition.getZ();
-            this.fields[x][z] = new MapShipField(ship);
+            this.fields[z][x] = new MapShipField(ship);
             currentPosition = currentPosition.add(ship.getDirection().getPosition());
         }
     }
@@ -57,7 +68,7 @@ public class Map
 
     public MapField getField(int x, int z)
     {
-        return this.fields[x][z];
+        return this.fields[z][x];
     }
 
     public MapField[][] getFields()

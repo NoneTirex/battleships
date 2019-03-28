@@ -30,7 +30,7 @@ class MapTests
     void collideOtherShips()
     {
         Ship ship = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
-        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 7), MapDirection.VERTICAL_POSITIVE);
+        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 5), MapDirection.VERTICAL_POSITIVE);
 
         Map map = new Map();
         map.addShip(ship);
@@ -41,8 +41,8 @@ class MapTests
     @Test
     void notCollideOtherShips()
     {
-        Ship ship = new ShipTests.TestShip(new MapPosition(5, 6), MapDirection.HORIZONTAL_NEGATIVE);
-        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 7), MapDirection.HORIZONTAL_NEGATIVE);
+        Ship ship = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
+        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 6), MapDirection.HORIZONTAL_NEGATIVE);
 
         Map map = new Map();
         map.addShip(ship);
