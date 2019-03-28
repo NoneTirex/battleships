@@ -26,6 +26,6 @@ public class MapShipField extends MapField
     @Override
     public char toChar()
     {
-        return this.isAlreadyHit() ? 'X' : '#';
+        return this.isAlreadyHit() ? 'X' : ' ';
     }
 }
