@@ -13,4 +13,9 @@ public class MapField
     {
         this.alreadyHit = alreadyHit;
     }
+
+    public void shootField()
+    {
+        this.alreadyHit = true;
+    }
 }

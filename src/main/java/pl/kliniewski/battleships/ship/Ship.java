@@ -12,4 +12,10 @@ public interface Ship
     int getSize();
 
     MapDirection getDirection();
+
+    int getReceivedShots();
+
+    boolean isShotted();
+
+    void shootShip();
 }

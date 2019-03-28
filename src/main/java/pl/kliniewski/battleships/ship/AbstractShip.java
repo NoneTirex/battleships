@@ -10,6 +10,8 @@ public abstract class AbstractShip
     private final int          size;
     private final MapDirection direction;
 
+    private int receivedShots;
+
     public AbstractShip(MapPosition startPosition, int size, MapDirection direction)
     {
         this.startPosition = startPosition;
@@ -17,18 +19,42 @@ public abstract class AbstractShip
         this.direction = direction;
     }
 
+    @Override
     public MapPosition getStartPosition()
     {
         return startPosition;
     }
 
+    @Override
     public int getSize()
     {
         return size;
     }
 
+    @Override
     public MapDirection getDirection()
     {
         return direction;
+    }
+
+    @Override
+    public int getReceivedShots()
+    {
+        return receivedShots;
+    }
+
+    @Override
+    public boolean isShotted()
+    {
+        return this.receivedShots >= this.size;
+    }
+
+    @Override
+    public void shootShip()
+    {
+        if (!this.isShotted())
+        {
+            this.receivedShots++;
+        }
     }
 }

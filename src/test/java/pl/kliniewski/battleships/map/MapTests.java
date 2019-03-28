@@ -36,7 +36,7 @@ public class MapTests
     public void checkStateOfShootedField()
     {
         Map map = new Map();
-        map.shootIntoField(7, 7);
+        map.getField(7, 7).shootField();
 
         MapField mapField = map.getField(7, 7);
 

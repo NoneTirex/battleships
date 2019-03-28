@@ -15,4 +15,11 @@ public class MapShipField extends MapField
     {
         return ship;
     }
+
+    @Override
+    public void shootField()
+    {
+        super.shootField();
+        this.ship.shootShip();
+    }
 }
