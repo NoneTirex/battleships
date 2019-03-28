@@ -49,12 +49,6 @@ public class Map
         return null;
     }
 
-    public void shootIntoField(int x, int z)
-    {
-        MapField field = this.getField(x, z);
-        field.setAlreadyHit(true);
-    }
-
     public MapField getField(int x, int z)
     {
         return this.fields[x][z];
