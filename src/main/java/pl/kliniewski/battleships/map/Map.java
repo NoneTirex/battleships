@@ -12,14 +12,13 @@ public class Map
     {
         for (Ship ship : ships)
         {
-            MapPosition lastPosition = ship.getStartPosition();
+            MapPosition currentPosition = ship.getStartPosition();
             for (int i = 0; i < ship.getSize(); i++)
             {
-                MapPosition currentPosition = lastPosition.add(ship.getDirection().getPosition());
                 int x = currentPosition.getX();
                 int z = currentPosition.getZ();
                 this.fields[x][z] = new MapShipField(x, z, ship);
-                lastPosition = currentPosition;
+                currentPosition = currentPosition.add(ship.getDirection().getPosition());
             }
         }
         this.fillEmptyFields();
