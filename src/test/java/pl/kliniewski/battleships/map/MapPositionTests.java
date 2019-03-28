@@ -1,7 +1,8 @@
 package pl.kliniewski.battleships.map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MapPositionTests
 {
@@ -13,7 +14,19 @@ public class MapPositionTests
 
         MapPosition sum = first.add(second);
 
-        Assertions.assertEquals(6, sum.getX());
-        Assertions.assertEquals(6, sum.getZ());
+        assertEquals(6, sum.getX());
+        assertEquals(6, sum.getZ());
+    }
+
+    @Test
+    void provideImmutable()
+    {
+        MapPosition first = new MapPosition(5, 3);
+        MapPosition second = new MapPosition(1, 3);
+
+        MapPosition sum = first.add(second);
+
+        assertNotEquals(sum, first);
+        assertNotEquals(sum, second);
     }
 }
