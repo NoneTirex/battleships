@@ -15,11 +15,11 @@ public class ShipTests
 
         testShip.shootShip();
         assertEquals(1, testShip.getReceivedShots());
-        assertFalse(testShip.isShotted());
+        assertFalse(testShip.isSunk());
     }
 
     @Test
-    void checkShottedShip()
+    void checkSunkShip()
     {
         TestShip testShip = new TestShip(new MapPosition(0, 0), MapDirection.HORIZONTAL_POSITIVE);
 
@@ -28,7 +28,7 @@ public class ShipTests
             testShip.shootShip();
         }
         assertEquals(3, testShip.getReceivedShots());
-        assertTrue(testShip.isShotted());
+        assertTrue(testShip.isSunk());
     }
 
     public static class TestShip
