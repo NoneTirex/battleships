@@ -6,8 +6,6 @@ import pl.kliniewski.battleships.ship.Ship;
 
 public class Map
 {
-    private static final MapField EMPTY_FIELD = new MapField();
-
     private final MapField[][] fields = new MapField[10][10];
 
     public Map(Ship... ships)
@@ -24,20 +22,42 @@ public class Map
                 lastPosition = currentPosition;
             }
         }
+        this.fillEmptyFields();
+    }
+
+    private void fillEmptyFields()
+    {
+        for (int x = 0; x < this.fields.length; x++)
+        {
+            MapField[] column = this.fields[x];
+            for (int z = 0; z < column.length; z++)
+            {
+                if (column[z] == null)
+                {
+                    column[z] = new MapField();
+                }
+            }
+        }
     }
 
     public Ship getShip(int x, int z)
     {
-        return null;
-    }
-
-    public MapField getField(int x, int z)
-    {
+        MapField field = this.getField(x, z);
+        if (field instanceof MapShipField)
+        {
+            return ((MapShipField) field).getShip();
+        }
         return null;
     }
 
     public void shootIntoField(int x, int z)
     {
+        MapField field = this.getField(x, z);
+        field.setAlreadyHit(true);
+    }
 
+    public MapField getField(int x, int z)
+    {
+        return this.fields[x][z];
     }
 }
