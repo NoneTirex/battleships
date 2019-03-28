@@ -1,8 +1,6 @@
-package pl.kliniewski.battleships.ship;
+package pl.kliniewski.battleships.map;
 
-import pl.kliniewski.battleships.map.MapPosition;
-
-public enum ShipDirection
+public enum MapDirection
 {
     HORIZONTAL_POSITIVE(1, 0),
     HORIZONTAL_NEGATIVE(-1, 0),
@@ -11,7 +9,7 @@ public enum ShipDirection
 
     private final MapPosition position;
 
-    ShipDirection(int x, int z)
+    MapDirection(int x, int z)
     {
         this.position = new MapPosition(x, z);
     }

@@ -1,5 +1,6 @@
 package pl.kliniewski.battleships.ship;
 
+import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
 
 public interface Ship
@@ -10,5 +11,5 @@ public interface Ship
 
     int getSize();
 
-    ShipDirection getDirection();
+    MapDirection getDirection();
 }

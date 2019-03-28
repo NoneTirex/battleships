@@ -1,4 +1,4 @@
-package pl.kliniewski.battleships.map;
+package pl.kliniewski.battleships.map.field;
 
 public class MapField
 {

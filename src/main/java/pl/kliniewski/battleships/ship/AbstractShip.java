@@ -1,15 +1,16 @@
 package pl.kliniewski.battleships.ship;
 
+import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
 
 public abstract class AbstractShip
         implements Ship
 {
-    private final MapPosition startPosition;
-    private final int size;
-    private final ShipDirection direction;
+    private final MapPosition  startPosition;
+    private final int          size;
+    private final MapDirection direction;
 
-    public AbstractShip(MapPosition startPosition, int size, ShipDirection direction)
+    public AbstractShip(MapPosition startPosition, int size, MapDirection direction)
     {
         this.startPosition = startPosition;
         this.size = size;
@@ -26,7 +27,7 @@ public abstract class AbstractShip
         return size;
     }
 
-    public ShipDirection getDirection()
+    public MapDirection getDirection()
     {
         return direction;
     }
