@@ -27,6 +27,30 @@ class MapTests
     }
 
     @Test
+    void collideOtherShips()
+    {
+        Ship ship = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
+        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 7), MapDirection.VERTICAL_POSITIVE);
+
+        Map map = new Map();
+        map.addShip(ship);
+
+        assertTrue(map.collidedOtherShips(secondShip));
+    }
+
+    @Test
+    void notCollideOtherShips()
+    {
+        Ship ship = new ShipTests.TestShip(new MapPosition(5, 6), MapDirection.HORIZONTAL_NEGATIVE);
+        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 7), MapDirection.HORIZONTAL_NEGATIVE);
+
+        Map map = new Map();
+        map.addShip(ship);
+
+        assertFalse(map.collidedOtherShips(secondShip));
+    }
+
+    @Test
     void checkStateOfNotShootedField()
     {
         Map map = new Map();

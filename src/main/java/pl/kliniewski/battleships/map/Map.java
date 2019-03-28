@@ -28,6 +28,11 @@ public class Map
         }
     }
 
+    public boolean collidedOtherShips(Ship ship)
+    {
+        return false;
+    }
+
     public void addShip(Ship ship)
     {
         MapPosition currentPosition = ship.getStartPosition();
