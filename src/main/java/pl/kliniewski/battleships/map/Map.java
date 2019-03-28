@@ -71,6 +71,21 @@ public class Map
         return null;
     }
 
+    public boolean isFinished()
+    {
+        for (MapField[] row : this.fields)
+        {
+            for (MapField field : row)
+            {
+                if (field instanceof MapShipField && !field.isAlreadyHit())
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public MapField getField(int x, int z)
     {
         return this.fields[z][x];

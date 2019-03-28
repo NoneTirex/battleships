@@ -15,7 +15,7 @@ public interface Ship
 
     int getReceivedShots();
 
-    boolean isShotted();
+    boolean isSunk();
 
     void shootShip();
 }

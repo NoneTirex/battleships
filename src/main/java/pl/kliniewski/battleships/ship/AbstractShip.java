@@ -44,7 +44,7 @@ public abstract class AbstractShip
     }
 
     @Override
-    public boolean isShotted()
+    public boolean isSunk()
     {
         return this.receivedShots >= this.size;
     }
@@ -52,7 +52,7 @@ public abstract class AbstractShip
     @Override
     public void shootShip()
     {
-        if (!this.isShotted())
+        if (!this.isSunk())
         {
             this.receivedShots++;
         }

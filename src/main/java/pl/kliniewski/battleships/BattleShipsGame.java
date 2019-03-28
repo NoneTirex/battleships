@@ -4,6 +4,7 @@ import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapBuilder;
 import pl.kliniewski.battleships.map.field.MapField;
 import pl.kliniewski.battleships.map.field.MapShipField;
+import pl.kliniewski.battleships.ship.Ship;
 
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BattleShipsGame
 {
     private final Map map;
+
+    private int sunkenShips;
 
     public BattleShipsGame(Map map)
     {
@@ -106,19 +109,51 @@ public class BattleShipsGame
         }
         field.shootField();
 
+        boolean sunken = field instanceof MapShipField && ((MapShipField) field).getShip().isSunk();
+        if (sunken)
+        {
+            this.sunkenShips++;
+        }
+
         this.printMap();
+
         if (field instanceof MapShipField)
         {
-            System.out.printf("Hit. %s.\n", ((MapShipField) field).getShip().getName());
+            Ship ship = ((MapShipField) field).getShip();
+            if (sunken)
+            {
+                System.out.printf("Hit and sink. %s.\n", ship.getName());
+            }
+            else
+            {
+                System.out.printf("Hit. %s.\n", ship.getName());
+            }
         }
         else
         {
             System.out.println("Miss.");
         }
+
+        if (this.map.isFinished())
+        {
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println(" __     __          __          __         ");
+            System.out.println(" \\ \\   / /          \\ \\        / /         ");
+            System.out.println("  \\ \\_/ /__  _   _   \\ \\  /\\  / /__  _ __  ");
+            System.out.println("   \\   / _ \\| | | |   \\ \\/  \\/ / _ \\| '_ \\ ");
+            System.out.println("    | | (_) | |_| |    \\  /\\  / (_) | | | |");
+            System.out.println("    |_|\\___/ \\__,_|     \\/  \\/ \\___/|_| |_|");
+            System.out.println("                                           ");
+            System.out.println("                                           ");
+            System.exit(0);
+        }
     }
 
     private void printHeader()
     {
+        System.out.printf("Sunken ships: %d\n", this.sunkenShips);
         System.out.print(" ");
         for (int i = 0; i < 10; i++)
         {
