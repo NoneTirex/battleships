@@ -62,7 +62,7 @@ public class BattleShipsGame
         System.out.println("Rules:");
         System.out.println("  1. The player enters or selects coordinates “A5”,");
         System.out.println("       where “A” is the column and “5” is the row");
-        System.out.println("  2. You won when all enemy ships are shot");
+        System.out.println("  2. You won when all enemy ships are sunk");
         System.out.println("  x. Type <ENTER> to start game");
         System.out.println("");
     }
