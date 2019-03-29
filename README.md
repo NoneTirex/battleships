@@ -5,7 +5,7 @@ Game ends when all the ships are sunk.
 
 Full instruction: https://www.hasbro.com/common/instruct/Battleship.PDF
 
-### How to build
+## How to build
 
 You require the following to build:
 - Latest stable [Oracle JDK 11](http://www.oracle.com/technetwork/java/)
@@ -17,19 +17,19 @@ mvn clean package
 ```
 
 
-### Running the tests
+## Running the tests
 To run the tests, call `mvn test`
 
 
-### Start game
+## Start game
 
-##### In IDE
+#### In IDE
 Create a Java application that main class is `pl.kliniewski.battleships.BattleShipsGame` and working directory is your project root folder.
 
-##### Command Line
+#### Command Line
 ```
 java -jar target/battleships-1.0-SNAPSHOT.jar
 ```
 
-### TODO
+## TODO
 - [ ] implement SALVO for more experienced players
