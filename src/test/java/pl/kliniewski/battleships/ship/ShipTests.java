@@ -1,5 +1,6 @@
 package pl.kliniewski.battleships.ship;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ShipTests
 {
     @Test
+    @DisplayName("Check if ship gets a shot correctly")
     void shootingSystemToShip()
     {
         TestShip testShip = new TestShip(new MapPosition(0, 0), MapDirection.HORIZONTAL_POSITIVE);
@@ -19,6 +21,7 @@ public class ShipTests
     }
 
     @Test
+    @DisplayName("Check if ship was sunk after get right amount of shots")
     void checkSunkShip()
     {
         TestShip testShip = new TestShip(new MapPosition(0, 0), MapDirection.HORIZONTAL_POSITIVE);
