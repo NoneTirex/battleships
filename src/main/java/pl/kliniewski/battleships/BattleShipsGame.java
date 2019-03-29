@@ -22,8 +22,6 @@ public class BattleShipsGame
 
     public static void main(String[] args)
     {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-
         MapBuilder mapBuilder = new MapBuilder();
         mapBuilder.appendRandomBattleship();
         mapBuilder.appendRandomDestroyer();
