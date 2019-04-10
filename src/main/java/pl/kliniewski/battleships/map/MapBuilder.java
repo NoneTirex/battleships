@@ -2,6 +2,7 @@ package pl.kliniewski.battleships.map;
 
 import pl.kliniewski.battleships.ship.BattleShip;
 import pl.kliniewski.battleships.ship.DestroyerShip;
+import pl.kliniewski.battleships.ship.Ship;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -9,7 +10,7 @@ public class MapBuilder
 {
     private final Map map = new Map();
 
-    MapPosition randomPosition(int size, MapDirection direction)
+    private MapPosition randomPosition(int size, MapDirection direction)
     {
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
@@ -29,7 +30,7 @@ public class MapBuilder
         return position;
     }
 
-    MapDirection randomDirection()
+    private MapDirection randomDirection()
     {
         int index = ThreadLocalRandom.current().nextInt(MapDirection.values().length);
         return MapDirection.values()[index];
@@ -38,14 +39,14 @@ public class MapBuilder
     public MapBuilder appendRandomBattleship()
     {
         MapDirection direction = this.randomDirection();
-        this.map.addShip(new BattleShip(this.randomPosition(5, direction), direction));
+        this.map.addShip(new BattleShip(this.randomPosition(Ship.BATTLESHIP_SIZE, direction), direction));
         return this;
     }
 
     public MapBuilder appendRandomDestroyer()
     {
         MapDirection direction = this.randomDirection();
-        this.map.addShip(new DestroyerShip(this.randomPosition(4, direction), direction));
+        this.map.addShip(new DestroyerShip(this.randomPosition(Ship.DESTROYER_SIZE, direction), direction));
         return this;
     }
 

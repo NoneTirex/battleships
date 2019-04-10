@@ -8,7 +8,7 @@ public class DestroyerShip
 {
     public DestroyerShip(MapPosition startPosition, MapDirection direction)
     {
-        super(startPosition, 4, direction);
+        super(startPosition, DESTROYER_SIZE, direction);
     }
 
     @Override

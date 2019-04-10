@@ -5,6 +5,9 @@ import pl.kliniewski.battleships.map.MapPosition;
 
 public interface Ship
 {
+    int BATTLESHIP_SIZE = 5;
+    int DESTROYER_SIZE = 4;
+
     String getName();
 
     MapPosition getStartPosition();
