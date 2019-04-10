@@ -4,13 +4,13 @@ import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapBuilder;
 import pl.kliniewski.battleships.map.field.MapField;
 import pl.kliniewski.battleships.map.field.MapShipField;
-import pl.kliniewski.battleships.ship.Ship;
 
 import java.util.Scanner;
 
 public class BattleShipsGame
 {
-    private final Map map;
+    private final DisplayEngine display = new DisplayEngine(this);
+    private final Map           map;
 
     private int sunkenShips;
 
@@ -37,12 +37,12 @@ public class BattleShipsGame
         mapBuilder.appendRandomDestroyer();
         BattleShipsGame shipsGame = new BattleShipsGame(mapBuilder.build());
 
-        DisplayEngine.printIntro();
+        shipsGame.display.printIntro();
         try (Scanner scanner = new Scanner(System.in))
         {
             scanner.nextLine();
 
-            DisplayEngine.printMap(shipsGame);
+            shipsGame.display.printMap();
 
             String line;
             while ((line = scanner.nextLine()) != null)
@@ -87,28 +87,12 @@ public class BattleShipsGame
             this.sunkenShips++;
         }
 
-        DisplayEngine.printMap(this);
-
-        if (field instanceof MapShipField)
-        {
-            Ship ship = ((MapShipField) field).getShip();
-            if (sunken)
-            {
-                System.out.printf("Hit and sink. %s.\n", ship.getName());
-            }
-            else
-            {
-                System.out.printf("Hit. %s.\n", ship.getName());
-            }
-        }
-        else
-        {
-            System.out.println("Miss.");
-        }
+        this.display.printMap();
+        this.display.printShoot(field);
 
         if (this.map.isFinished())
         {
-            DisplayEngine.printVictory();
+            this.display.printVictory();
             System.exit(0);
         }
     }

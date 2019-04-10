@@ -1,10 +1,19 @@
 package pl.kliniewski.battleships;
 
 import pl.kliniewski.battleships.map.field.MapField;
+import pl.kliniewski.battleships.map.field.MapShipField;
+import pl.kliniewski.battleships.ship.Ship;
 
 public class DisplayEngine
 {
-    public static void printIntro()
+    private final BattleShipsGame game;
+
+    public DisplayEngine(BattleShipsGame game)
+    {
+        this.game = game;
+    }
+
+    public void printIntro()
     {
         System.out.println("");
         System.out.println("   ___       __  __  __        __   _        ");
@@ -28,20 +37,20 @@ public class DisplayEngine
         System.out.println("");
     }
 
-    public static void printMap(BattleShipsGame game)
+    public void printMap()
     {
-        MapField[][] fields = game.getMap().getFields();
-        printHeader(game);
+        MapField[][] fields = this.game.getMap().getFields();
+        this.printHeader();
         for (int x = 0; x < fields.length; x++)
         {
             MapField[] row = fields[x];
-            printRow(x, row);
+            this.printRow(x, row);
         }
     }
 
-    public static void printHeader(BattleShipsGame game)
+    public void printHeader()
     {
-        System.out.printf("Sunken ships: %d\n", game.getSunkenShips());
+        System.out.printf("Sunken ships: %d\n", this.game.getSunkenShips());
         System.out.print(" ");
         for (int i = 0; i < 10; i++)
         {
@@ -50,7 +59,7 @@ public class DisplayEngine
         System.out.println(" |");
     }
 
-    public static void printRow(int index, MapField[] row)
+    public void printRow(int index, MapField[] row)
     {
         System.out.print((char) ('0' + index));
         for (MapField field : row)
@@ -60,7 +69,7 @@ public class DisplayEngine
         System.out.println(" |");
     }
 
-    public static void printVictory()
+    public void printVictory()
     {
         System.out.println("");
         System.out.println("");
@@ -73,5 +82,25 @@ public class DisplayEngine
         System.out.println("    |_|\\___/ \\__,_|     \\/  \\/ \\___/|_| |_|");
         System.out.println("                                           ");
         System.out.println("                                           ");
+    }
+
+    public void printShoot(MapField field)
+    {
+        if (field instanceof MapShipField)
+        {
+            Ship ship = ((MapShipField) field).getShip();
+            if (((MapShipField) field).getShip().isSunk())
+            {
+                System.out.printf("Hit and sink. %s.\n", ship.getName());
+            }
+            else
+            {
+                System.out.printf("Hit. %s.\n", ship.getName());
+            }
+        }
+        else
+        {
+            System.out.println("Miss.");
+        }
     }
 }
