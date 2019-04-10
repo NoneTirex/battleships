@@ -7,7 +7,6 @@ import pl.kliniewski.battleships.map.field.MapShipField;
 import pl.kliniewski.battleships.ship.Ship;
 
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class BattleShipsGame
 {
@@ -20,6 +19,16 @@ public class BattleShipsGame
         this.map = map;
     }
 
+    public Map getMap()
+    {
+        return map;
+    }
+
+    public int getSunkenShips()
+    {
+        return sunkenShips;
+    }
+
     public static void main(String[] args)
     {
         MapBuilder mapBuilder = new MapBuilder();
@@ -28,53 +37,18 @@ public class BattleShipsGame
         mapBuilder.appendRandomDestroyer();
         BattleShipsGame shipsGame = new BattleShipsGame(mapBuilder.build());
 
-        shipsGame.printIntro();
+        DisplayEngine.printIntro();
         try (Scanner scanner = new Scanner(System.in))
         {
             scanner.nextLine();
 
-            shipsGame.printMap();
+            DisplayEngine.printMap(shipsGame);
 
             String line;
             while ((line = scanner.nextLine()) != null)
             {
                 shipsGame.executeMove(line);
             }
-        }
-    }
-
-    private void printIntro()
-    {
-        System.out.println("");
-        System.out.println("   ___       __  __  __        __   _        ");
-        System.out.println("  / _ )___ _/ /_/ /_/ /__ ___ / /  (_)__  ___");
-        System.out.println(" / _  / _ `/ __/ __/ / -_|_-</ _ \\/ / _ \\(_-<");
-        System.out.println("/____/\\_,_/\\__/\\__/_/\\__/___/_//_/_/ .__/___/");
-        System.out.println("             by Szymon Kliniewski /_/        ");
-        System.out.println("");
-
-        System.out.println("Legend:");
-        System.out.println("  | . | - shows already shot fields");
-        System.out.println("  | X | - shows already shot fields, which are ships");
-        System.out.println("  |   | - shows fields, which are hidden");
-        System.out.println("");
-
-        System.out.println("Rules:");
-        System.out.println("  1. The player enters or selects coordinates “A5”,");
-        System.out.println("       where “A” is the column and “5” is the row");
-        System.out.println("  2. You won when all enemy ships are sunk");
-        System.out.println("  x. Type <ENTER> to start game");
-        System.out.println("");
-    }
-
-    public void printMap()
-    {
-        MapField[][] fields = this.map.getFields();
-        this.printHeader();
-        for (int x = 0; x < fields.length; x++)
-        {
-            MapField[] row = fields[x];
-            this.printRow(x, row);
         }
     }
 
@@ -113,7 +87,7 @@ public class BattleShipsGame
             this.sunkenShips++;
         }
 
-        this.printMap();
+        DisplayEngine.printMap(this);
 
         if (field instanceof MapShipField)
         {
@@ -134,40 +108,8 @@ public class BattleShipsGame
 
         if (this.map.isFinished())
         {
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println(" __     __          __          __         ");
-            System.out.println(" \\ \\   / /          \\ \\        / /         ");
-            System.out.println("  \\ \\_/ /__  _   _   \\ \\  /\\  / /__  _ __  ");
-            System.out.println("   \\   / _ \\| | | |   \\ \\/  \\/ / _ \\| '_ \\ ");
-            System.out.println("    | | (_) | |_| |    \\  /\\  / (_) | | | |");
-            System.out.println("    |_|\\___/ \\__,_|     \\/  \\/ \\___/|_| |_|");
-            System.out.println("                                           ");
-            System.out.println("                                           ");
+            DisplayEngine.printVictory();
             System.exit(0);
         }
-    }
-
-    private void printHeader()
-    {
-        System.out.printf("Sunken ships: %d\n", this.sunkenShips);
-        System.out.print(" ");
-        for (int i = 0; i < 10; i++)
-        {
-            System.out.print(" | " + (char) ('A' + i));
-        }
-        System.out.println(" |");
-    }
-
-    private void printRow(int index, MapField[] row)
-    {
-        System.out.print((char) ('0' + index));
-        for (int z = 0; z < row.length; z++)
-        {
-            MapField field = row[z];
-            System.out.print(" | " + field.toChar());
-        }
-        System.out.println(" |");
     }
 }
