@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
-import pl.kliniewski.battleships.map.field.MapField;
+import pl.kliniewski.battleships.map.MapField;
 import pl.kliniewski.battleships.ship.ShipTests;
 
 import static org.junit.jupiter.api.Assertions.*;

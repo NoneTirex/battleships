@@ -1,7 +1,5 @@
 package pl.kliniewski.battleships.map;
 
-import pl.kliniewski.battleships.map.field.MapField;
-import pl.kliniewski.battleships.map.field.MapShipField;
 import pl.kliniewski.battleships.ship.Ship;
 
 public class Map
@@ -40,7 +38,7 @@ public class Map
         {
             int x = currentPosition.getX();
             int z = currentPosition.getZ();
-            if (this.getField(x, z) instanceof MapShipField)
+            if (this.getField(x, z).getShip() != null)
             {
                 return true;
             }
@@ -56,19 +54,14 @@ public class Map
         {
             int x = currentPosition.getX();
             int z = currentPosition.getZ();
-            this.fields[z][x] = new MapShipField(ship);
+            this.fields[z][x] = new MapField(ship);
             currentPosition = currentPosition.add(ship.getDirection().getPosition());
         }
     }
 
     public Ship getShip(int x, int z)
     {
-        MapField field = this.getField(x, z);
-        if (field instanceof MapShipField)
-        {
-            return ((MapShipField) field).getShip();
-        }
-        return null;
+        return this.getField(x, z).getShip();
     }
 
     public boolean isFinished()
@@ -77,7 +70,7 @@ public class Map
         {
             for (MapField field : row)
             {
-                if (field instanceof MapShipField && !field.isAlreadyHit())
+                if (field.getShip() != null && !field.isAlreadyHit())
                 {
                     return false;
                 }

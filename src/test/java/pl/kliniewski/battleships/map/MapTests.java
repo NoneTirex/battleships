@@ -2,7 +2,6 @@ package pl.kliniewski.battleships.map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pl.kliniewski.battleships.map.field.MapField;
 import pl.kliniewski.battleships.ship.Ship;
 import pl.kliniewski.battleships.ship.ShipTests;
 

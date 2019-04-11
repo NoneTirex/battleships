@@ -3,8 +3,7 @@ package pl.kliniewski.battleships;
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapBuilder;
 import pl.kliniewski.battleships.map.MapPosition;
-import pl.kliniewski.battleships.map.field.MapField;
-import pl.kliniewski.battleships.map.field.MapShipField;
+import pl.kliniewski.battleships.map.MapField;
 
 import java.util.Scanner;
 
@@ -106,8 +105,7 @@ public class BattleShipsGame
         {
             field.shootField();
 
-            boolean sunken = field instanceof MapShipField && ((MapShipField) field).getShip().isSunk();
-            if (sunken)
+            if (field.getShip() != null && field.getShip().isSunk())
             {
                 this.sunkenShips++;
             }

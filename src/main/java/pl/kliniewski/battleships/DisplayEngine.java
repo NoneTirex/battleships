@@ -1,7 +1,6 @@
 package pl.kliniewski.battleships;
 
-import pl.kliniewski.battleships.map.field.MapField;
-import pl.kliniewski.battleships.map.field.MapShipField;
+import pl.kliniewski.battleships.map.MapField;
 import pl.kliniewski.battleships.ship.Ship;
 
 public class DisplayEngine
@@ -86,21 +85,17 @@ public class DisplayEngine
 
     public void printShoot(MapField field)
     {
-        if (field instanceof MapShipField)
-        {
-            Ship ship = ((MapShipField) field).getShip();
-            if (((MapShipField) field).getShip().isSunk())
-            {
-                System.out.printf("Hit and sink. %s.\n", ship.getName());
-            }
-            else
-            {
-                System.out.printf("Hit. %s.\n", ship.getName());
-            }
-        }
-        else
+        Ship ship = field.getShip();
+        if (ship == null)
         {
             System.out.println("Miss.");
+            return;
         }
+        if (ship.isSunk())
+        {
+            System.out.printf("Hit and sink. %s.\n", ship.getName());
+            return;
+        }
+        System.out.printf("Hit. %s.\n", ship.getName());
     }
 }
