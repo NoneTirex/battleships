@@ -3,22 +3,58 @@ package pl.kliniewski.battleships.ship;
 import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
 
-public interface Ship
+public class Ship
 {
-    int BATTLESHIP_SIZE = 5;
-    int DESTROYER_SIZE  = 4;
+    private final String       name;
+    private final MapPosition  startPosition;
+    private final int          size;
+    private final MapDirection direction;
 
-    String getName();
+    private int receivedShots;
 
-    MapPosition getStartPosition();
+    public Ship(String name, MapPosition startPosition, int size, MapDirection direction)
+    {
+        this.name = name;
+        this.startPosition = startPosition;
+        this.size = size;
+        this.direction = direction;
+    }
 
-    int getSize();
+    public String getName()
+    {
+        return name;
+    }
 
-    MapDirection getDirection();
+    public MapPosition getStartPosition()
+    {
+        return startPosition;
+    }
 
-    int getReceivedShots();
+    public int getSize()
+    {
+        return size;
+    }
 
-    boolean isSunk();
+    public MapDirection getDirection()
+    {
+        return direction;
+    }
 
-    void shootShip();
+    public int getReceivedShots()
+    {
+        return receivedShots;
+    }
+
+    public void shootShip()
+    {
+        if (!this.isSunk())
+        {
+            this.receivedShots++;
+        }
+    }
+
+    public boolean isSunk()
+    {
+        return this.receivedShots >= this.size;
+    }
 }

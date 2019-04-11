@@ -35,17 +35,11 @@ public class ShipTests
     }
 
     public static class TestShip
-            extends AbstractShip
+            extends Ship
     {
         public TestShip(MapPosition startPosition, MapDirection direction)
         {
-            super(startPosition, 3, direction);
-        }
-
-        @Override
-        public String getName()
-        {
-            return "Test";
+            super("Test", startPosition, 3, direction);
         }
     }
 }

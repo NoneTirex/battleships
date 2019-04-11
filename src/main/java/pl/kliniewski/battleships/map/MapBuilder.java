@@ -1,7 +1,5 @@
 package pl.kliniewski.battleships.map;
 
-import pl.kliniewski.battleships.ship.BattleShip;
-import pl.kliniewski.battleships.ship.DestroyerShip;
 import pl.kliniewski.battleships.ship.Ship;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -9,6 +7,22 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MapBuilder
 {
     private final Map map = new Map();
+
+    public MapBuilder appendRandomBattleship()
+    {
+        int battleShipSize = 5;
+
+        MapDirection direction = this.randomDirection();
+        MapPosition position = this.randomPosition(battleShipSize, direction);
+        this.map.addShip(new Ship("Battleship", position, battleShipSize, direction));
+        return this;
+    }
+
+    private MapDirection randomDirection()
+    {
+        int index = ThreadLocalRandom.current().nextInt(MapDirection.values().length);
+        return MapDirection.values()[index];
+    }
 
     private MapPosition randomPosition(int size, MapDirection direction)
     {
@@ -30,23 +44,13 @@ public class MapBuilder
         return position;
     }
 
-    private MapDirection randomDirection()
-    {
-        int index = ThreadLocalRandom.current().nextInt(MapDirection.values().length);
-        return MapDirection.values()[index];
-    }
-
-    public MapBuilder appendRandomBattleship()
-    {
-        MapDirection direction = this.randomDirection();
-        this.map.addShip(new BattleShip(this.randomPosition(Ship.BATTLESHIP_SIZE, direction), direction));
-        return this;
-    }
-
     public MapBuilder appendRandomDestroyer()
     {
+        int destroyerSize = 4;
+
         MapDirection direction = this.randomDirection();
-        this.map.addShip(new DestroyerShip(this.randomPosition(Ship.DESTROYER_SIZE, direction), direction));
+        MapPosition position = this.randomPosition(destroyerSize, direction);
+        this.map.addShip(new Ship("Destroyer", position, destroyerSize, direction));
         return this;
     }
 
