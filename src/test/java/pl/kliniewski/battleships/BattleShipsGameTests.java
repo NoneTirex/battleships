@@ -1,16 +1,30 @@
 package pl.kliniewski.battleships;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import pl.kliniewski.battleships.map.Map;
+import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
+import pl.kliniewski.battleships.map.field.MapField;
+import pl.kliniewski.battleships.ship.ShipTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BattleShipsGameTests
 {
-    private final BattleShipsGame game = new BattleShipsGame(new Map());
+    private BattleShipsGame game;
+
+    @BeforeEach
+    void setUp()
+    {
+        Map map = new Map();
+        map.addShip(new ShipTests.TestShip(new MapPosition(9, 9), MapDirection.VERTICAL_NEGATIVE));
+
+        this.game = new BattleShipsGame(map);
+    }
 
     @DisplayName("Check if parseMove method are correctly")
     @ParameterizedTest(name = "Coordinates {0} = ({1}, {2})")
@@ -24,5 +38,27 @@ public class BattleShipsGameTests
         assertNotNull(position);
         assertEquals(expectedX, position.getX());
         assertEquals(expectedZ, position.getZ());
+    }
+
+    @Test
+    void interactFieldTest()
+    {
+        MapField field = this.game.getMap().getField(5, 5);
+
+        this.game.interactField(field);
+
+        assertTrue(field.isAlreadyHit());
+    }
+
+    @Test
+    void interactFieldWithSunkenShipTest()
+    {
+        assertEquals(0, this.game.getSunkenShips());
+
+        this.game.interactField(this.game.getMap().getField(9, 9));
+        this.game.interactField(this.game.getMap().getField(9, 8));
+        this.game.interactField(this.game.getMap().getField(9, 7));
+
+        assertEquals(1, this.game.getSunkenShips());
     }
 }

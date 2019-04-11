@@ -53,6 +53,32 @@ public class BattleShipsGame
         }
     }
 
+    private void executeMove(String coordinates)
+    {
+        MapPosition position = this.parseMove(coordinates);
+        if (position == null)
+        {
+            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", coordinates);
+            return;
+        }
+        MapField field = this.map.getField(position.getX(), position.getZ());
+        if (field.isAlreadyHit())
+        {
+            System.out.println("The field is already shot");
+            return;
+        }
+        this.interactField(field);
+
+        this.display.printMap();
+        this.display.printShoot(field);
+
+        if (this.map.isFinished())
+        {
+            this.display.printVictory();
+            System.exit(0);
+        }
+    }
+
     public MapPosition parseMove(String coordinates)
     {
         if (coordinates.length() != 2)
@@ -74,35 +100,17 @@ public class BattleShipsGame
         return new MapPosition(x, z);
     }
 
-    public void executeMove(String coordinates)
+    public void interactField(MapField field)
     {
-        MapPosition position = this.parseMove(coordinates);
-        if (position == null)
+        if (!field.isAlreadyHit())
         {
-            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", coordinates);
-            return;
-        }
-        MapField field = this.map.getField(position.getX(), position.getZ());
-        if (field.isAlreadyHit())
-        {
-            System.out.println("The field is already shot");
-            return;
-        }
-        field.shootField();
+            field.shootField();
 
-        boolean sunken = field instanceof MapShipField && ((MapShipField) field).getShip().isSunk();
-        if (sunken)
-        {
-            this.sunkenShips++;
-        }
-
-        this.display.printMap();
-        this.display.printShoot(field);
-
-        if (this.map.isFinished())
-        {
-            this.display.printVictory();
-            System.exit(0);
+            boolean sunken = field instanceof MapShipField && ((MapShipField) field).getShip().isSunk();
+            if (sunken)
+            {
+                this.sunkenShips++;
+            }
         }
     }
 }

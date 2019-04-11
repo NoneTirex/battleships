@@ -33,12 +33,15 @@ class MapTests
     void collideOtherShips()
     {
         Ship ship = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
-        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 5), MapDirection.VERTICAL_POSITIVE);
+        MapPosition position = new MapPosition(4, 5);
+        MapDirection direction = MapDirection.VERTICAL_POSITIVE;
+        Ship secondShip = new ShipTests.TestShip(position, direction);
 
         Map map = new Map();
         map.addShip(ship);
 
         assertTrue(map.collidedOtherShips(secondShip));
+        assertTrue(map.collidedOtherShips(position, secondShip.getSize(), direction));
     }
 
     @Test
@@ -46,12 +49,15 @@ class MapTests
     void notCollideOtherShips()
     {
         Ship ship = new ShipTests.TestShip(new MapPosition(5, 5), MapDirection.HORIZONTAL_NEGATIVE);
-        Ship secondShip = new ShipTests.TestShip(new MapPosition(4, 6), MapDirection.HORIZONTAL_NEGATIVE);
+        MapPosition position = new MapPosition(4, 6);
+        MapDirection direction = MapDirection.HORIZONTAL_NEGATIVE;
+        Ship secondShip = new ShipTests.TestShip(position, direction);
 
         Map map = new Map();
         map.addShip(ship);
 
         assertFalse(map.collidedOtherShips(secondShip));
+        assertFalse(map.collidedOtherShips(position, secondShip.getSize(), direction));
     }
 
     @Test
