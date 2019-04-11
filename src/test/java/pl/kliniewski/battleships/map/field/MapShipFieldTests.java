@@ -13,7 +13,7 @@ public class MapShipFieldTests
 {
     @Test
     @DisplayName("Check if ship a get shot from field")
-    void shootField()
+    void shootShipField()
     {
         Ship ship = new ShipTests.TestShip(new MapPosition(0, 0), MapDirection.HORIZONTAL_POSITIVE);
         MapShipField shipField = new MapShipField(ship);
