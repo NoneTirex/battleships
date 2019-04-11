@@ -11,10 +11,14 @@ public class MapBuilder
     public MapBuilder appendRandomBattleship()
     {
         int battleShipSize = 5;
+        return this.appendRandomShip("Battleship", battleShipSize);
+    }
 
+    private MapBuilder appendRandomShip(String name, int size)
+    {
         MapDirection direction = this.randomDirection();
-        MapPosition position = this.randomPosition(battleShipSize, direction);
-        this.map.addShip(new Ship("Battleship", position, battleShipSize, direction));
+        MapPosition position = this.randomPosition(size, direction);
+        this.map.addShip(new Ship(name, position, size, direction));
         return this;
     }
 
@@ -47,11 +51,7 @@ public class MapBuilder
     public MapBuilder appendRandomDestroyer()
     {
         int destroyerSize = 4;
-
-        MapDirection direction = this.randomDirection();
-        MapPosition position = this.randomPosition(destroyerSize, direction);
-        this.map.addShip(new Ship("Destroyer", position, destroyerSize, direction));
-        return this;
+        return this.appendRandomShip("Destroyer", destroyerSize);
     }
 
     public Map build()
