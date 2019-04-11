@@ -2,6 +2,7 @@ package pl.kliniewski.battleships;
 
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapBuilder;
+import pl.kliniewski.battleships.map.MapPosition;
 import pl.kliniewski.battleships.map.field.MapField;
 import pl.kliniewski.battleships.map.field.MapShipField;
 
@@ -52,12 +53,11 @@ public class BattleShipsGame
         }
     }
 
-    public void executeMove(String coordinates)
+    public MapPosition parseMove(String coordinates)
     {
         if (coordinates.length() != 2)
         {
-            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", coordinates);
-            return;
+            return null;
         }
         char[] chars = coordinates.toUpperCase().toCharArray();
         int x = chars[0] - 'A';
@@ -65,15 +65,24 @@ public class BattleShipsGame
 
         if (x < 0 || x >= 10)
         {
-            System.out.printf("Incorrect move! (incorrect first sentence, your type: %s\n", chars[0]);
-            return;
+            return null;
         }
         if (z < 0 || z >= 10)
         {
-            System.out.printf("Incorrect move! (incorrect second sentence, your type: %s\n", chars[1]);
+            return null;
+        }
+        return new MapPosition(x, z);
+    }
+
+    public void executeMove(String coordinates)
+    {
+        MapPosition position = this.parseMove(coordinates);
+        if (position == null)
+        {
+            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", coordinates);
             return;
         }
-        MapField field = this.map.getField(x, z);
+        MapField field = this.map.getField(position.getX(), position.getZ());
         if (field.isAlreadyHit())
         {
             System.out.println("The field is already shot");
