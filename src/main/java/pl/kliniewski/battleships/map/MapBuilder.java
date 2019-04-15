@@ -32,7 +32,7 @@ public class MapBuilder
     {
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
-        MapPosition offset = direction.getPosition().multiple(5);
+        MapPosition offset = direction.getPosition().multiple(size);
         int minX = Math.max(0, 0 - offset.getX());
         int maxX = Math.min(10, 10 - offset.getX());
         int minZ = Math.max(0, 0 - offset.getZ());
