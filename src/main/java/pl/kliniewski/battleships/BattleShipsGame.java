@@ -2,8 +2,8 @@ package pl.kliniewski.battleships;
 
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapBuilder;
-import pl.kliniewski.battleships.map.MapPosition;
 import pl.kliniewski.battleships.map.MapField;
+import pl.kliniewski.battleships.map.MapPosition;
 
 import java.util.Scanner;
 
@@ -44,10 +44,9 @@ public class BattleShipsGame
 
             shipsGame.display.printMap();
 
-            String line;
-            while ((line = scanner.nextLine()) != null)
+            while (scanner.hasNextLine())
             {
-                shipsGame.executeMove(line);
+                shipsGame.executeMove(scanner.nextLine());
             }
         }
     }
@@ -88,11 +87,7 @@ public class BattleShipsGame
         int x = chars[0] - 'A';
         int z = chars[1] - '0';
 
-        if (x < 0 || x >= 10)
-        {
-            return null;
-        }
-        if (z < 0 || z >= 10)
+        if (x < 0 || x >= Map.MAP_SIZE || z < 0 || z >= Map.MAP_SIZE)
         {
             return null;
         }

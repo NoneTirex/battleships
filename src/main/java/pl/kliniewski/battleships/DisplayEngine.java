@@ -1,5 +1,6 @@
 package pl.kliniewski.battleships;
 
+import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapField;
 import pl.kliniewski.battleships.ship.Ship;
 
@@ -51,7 +52,7 @@ public class DisplayEngine
     {
         System.out.printf("Sunken ships: %d\n", this.game.getSunkenShips());
         System.out.print(" ");
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Map.MAP_SIZE; i++)
         {
             System.out.print(" | " + (char) ('A' + i));
         }

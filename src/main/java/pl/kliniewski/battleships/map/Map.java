@@ -4,7 +4,9 @@ import pl.kliniewski.battleships.ship.Ship;
 
 public class Map
 {
-    private final MapField[][] fields = new MapField[10][10];
+    public static final int MAP_SIZE = 10;
+
+    private final MapField[][] fields = new MapField[MAP_SIZE][MAP_SIZE];
 
     public Map()
     {
@@ -47,6 +49,11 @@ public class Map
         return false;
     }
 
+    public MapField getField(int x, int z)
+    {
+        return this.fields[z][x];
+    }
+
     public void addShip(Ship ship)
     {
         MapPosition currentPosition = ship.getStartPosition();
@@ -77,11 +84,6 @@ public class Map
             }
         }
         return true;
-    }
-
-    public MapField getField(int x, int z)
-    {
-        return this.fields[z][x];
     }
 
     public MapField[][] getFields()
