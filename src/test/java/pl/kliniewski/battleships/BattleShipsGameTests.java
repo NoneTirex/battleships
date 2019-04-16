@@ -7,8 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapDirection;
-import pl.kliniewski.battleships.map.MapPosition;
 import pl.kliniewski.battleships.map.MapField;
+import pl.kliniewski.battleships.map.MapPosition;
 import pl.kliniewski.battleships.ship.ShipTests;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,9 +45,9 @@ public class BattleShipsGameTests
     {
         MapField field = this.game.getMap().getField(5, 5);
 
-        this.game.interactField(field);
-
+        assertTrue(this.game.interactField(field));
         assertTrue(field.isAlreadyHit());
+        assertFalse(this.game.interactField(field));
     }
 
     @Test

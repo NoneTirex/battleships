@@ -32,9 +32,8 @@ public class BattleShipsGame
     public static void main(String[] args)
     {
         MapBuilder mapBuilder = new MapBuilder();
-        mapBuilder.appendRandomBattleship();
-        mapBuilder.appendRandomDestroyer();
-        mapBuilder.appendRandomDestroyer();
+        mapBuilder.appendRandomBattleship().appendRandomDestroyer().appendRandomDestroyer();
+
         BattleShipsGame shipsGame = new BattleShipsGame(mapBuilder.build());
 
         shipsGame.display.printIntro();
@@ -46,26 +45,30 @@ public class BattleShipsGame
 
             while (scanner.hasNextLine())
             {
-                shipsGame.executeMove(scanner.nextLine());
+                shipsGame.preprocessInput(scanner.nextLine());
             }
         }
     }
 
-    private void executeMove(String coordinates)
+    private void preprocessInput(String line)
     {
-        MapPosition position = this.parseMove(coordinates);
+        MapPosition position = this.parseMove(line);
         if (position == null)
         {
-            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", coordinates);
+            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", line);
             return;
         }
+        this.executeMove(position);
+    }
+
+    private void executeMove(MapPosition position)
+    {
         MapField field = this.map.getField(position.getX(), position.getZ());
-        if (field.isAlreadyHit())
+        if (!this.interactField(field))
         {
             System.out.println("The field is already shot");
             return;
         }
-        this.interactField(field);
 
         this.display.printMap();
         this.display.printShoot(field);
@@ -94,16 +97,18 @@ public class BattleShipsGame
         return new MapPosition(x, z);
     }
 
-    public void interactField(MapField field)
+    boolean interactField(MapField field)
     {
-        if (!field.isAlreadyHit())
+        if (field.isAlreadyHit())
         {
-            field.shootField();
-
-            if (field.getShip() != null && field.getShip().isSunk())
-            {
-                this.sunkenShips++;
-            }
+            return false;
         }
+        field.shootField();
+
+        if (field.getShip() != null && field.getShip().isSunk())
+        {
+            this.sunkenShips++;
+        }
+        return true;
     }
 }
