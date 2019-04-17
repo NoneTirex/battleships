@@ -55,7 +55,7 @@ public class BattleShipsGame
         }
     }
 
-    private void preprocessInput(String line)
+    void preprocessInput(String line)
     {
         MapPosition position = this.parseMove(line);
         if (position == null)

@@ -98,4 +98,11 @@ class BattleShipsGameTests
         Mockito.verify(this.display).printVictory();
         assertTrue(this.game.isFinished());
     }
+
+    @Test
+    void preprocessInputTest()
+    {
+        this.game.preprocessInput("##");
+        Mockito.verify(this.display, Mockito.only()).printIncorrectMove(Mockito.any());
+    }
 }
