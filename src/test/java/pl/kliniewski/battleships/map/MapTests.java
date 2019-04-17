@@ -20,11 +20,6 @@ class MapTests
         assertEquals(ship, map.getShip(5, 5));
         assertEquals(ship, map.getShip(4, 5));
         assertEquals(ship, map.getShip(3, 5));
-
-        assertNull(map.getShip(2, 5));
-        assertNull(map.getShip(6, 5));
-        assertNull(map.getShip(5, 4));
-        assertNull(map.getShip(5, 6));
     }
 
     @Test
