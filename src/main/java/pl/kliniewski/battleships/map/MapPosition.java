@@ -30,10 +30,4 @@ public class MapPosition
     {
         return new MapPosition(this.x * multiplier, this.z * multiplier);
     }
-
-    @Override
-    public String toString()
-    {
-        return "(" + this.x + ", " + this.z + ")";
-    }
 }
