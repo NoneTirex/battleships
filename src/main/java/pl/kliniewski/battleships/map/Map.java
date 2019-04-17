@@ -10,20 +10,16 @@ public class Map
 
     public Map()
     {
-        this.fillEmptyFields();
+        this.fillFields();
     }
 
-    private void fillEmptyFields()
+    private void fillFields()
     {
-        for (int z = 0; z < this.fields.length; z++)
+        for (MapField[] row : this.fields)
         {
-            MapField[] column = this.fields[z];
-            for (int x = 0; x < column.length; x++)
+            for (int x = 0; x < row.length; x++)
             {
-                if (column[x] == null)
-                {
-                    column[x] = new MapField();
-                }
+                row[x] = new MapField();
             }
         }
     }
@@ -38,9 +34,7 @@ public class Map
         MapPosition currentPosition = startPosition;
         for (int i = 0; i < size; i++)
         {
-            int x = currentPosition.getX();
-            int z = currentPosition.getZ();
-            if (this.getField(x, z).getShip() != null)
+            if (this.getField(currentPosition.getX(), currentPosition.getZ()).getShip() != null)
             {
                 return true;
             }
@@ -59,9 +53,7 @@ public class Map
         MapPosition currentPosition = ship.getStartPosition();
         for (int i = 0; i < ship.getSize(); i++)
         {
-            int x = currentPosition.getX();
-            int z = currentPosition.getZ();
-            this.fields[z][x] = new MapField(ship);
+            this.fields[currentPosition.getZ()][currentPosition.getX()] = new MapField(ship);
             currentPosition = currentPosition.add(ship.getDirection().getPosition());
         }
     }

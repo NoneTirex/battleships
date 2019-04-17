@@ -9,13 +9,14 @@ import java.util.Scanner;
 
 public class BattleShipsGame
 {
-    private final DisplayEngine display = new DisplayEngine(this);
+    private final DisplayEngine display;
     private final Map           map;
 
     private int sunkenShips;
 
-    public BattleShipsGame(Map map)
+    public BattleShipsGame(DisplayEngine display, Map map)
     {
+        this.display = display;
         this.map = map;
     }
 
@@ -29,21 +30,25 @@ public class BattleShipsGame
         return sunkenShips;
     }
 
+    public boolean isFinished()
+    {
+        return this.map.isFinished();
+    }
+
     public static void main(String[] args)
     {
         MapBuilder mapBuilder = new MapBuilder();
         mapBuilder.appendRandomBattleship().appendRandomDestroyer().appendRandomDestroyer();
 
-        BattleShipsGame shipsGame = new BattleShipsGame(mapBuilder.build());
-
+        BattleShipsGame shipsGame = new BattleShipsGame(new DisplayEngine(), mapBuilder.build());
         shipsGame.display.printIntro();
+
         try (Scanner scanner = new Scanner(System.in))
         {
             scanner.nextLine();
 
-            shipsGame.display.printMap();
-
-            while (scanner.hasNextLine())
+            shipsGame.display.printMap(shipsGame);
+            while (!shipsGame.isFinished() && scanner.hasNextLine())
             {
                 shipsGame.preprocessInput(scanner.nextLine());
             }
@@ -55,29 +60,10 @@ public class BattleShipsGame
         MapPosition position = this.parseMove(line);
         if (position == null)
         {
-            System.out.printf("Incorrect move! (your type: %s, example: A1)\n", line);
+            this.display.printIncorrectMove(line);
             return;
         }
         this.executeMove(position);
-    }
-
-    private void executeMove(MapPosition position)
-    {
-        MapField field = this.map.getField(position.getX(), position.getZ());
-        if (!this.interactField(field))
-        {
-            System.out.println("The field is already shot");
-            return;
-        }
-
-        this.display.printMap();
-        this.display.printShoot(field);
-
-        if (this.map.isFinished())
-        {
-            this.display.printVictory();
-            System.exit(0);
-        }
     }
 
     MapPosition parseMove(String coordinates)
@@ -95,6 +81,24 @@ public class BattleShipsGame
             return null;
         }
         return new MapPosition(x, z);
+    }
+
+    void executeMove(MapPosition position)
+    {
+        MapField field = this.map.getField(position.getX(), position.getZ());
+        if (!this.interactField(field))
+        {
+            this.display.printFieldAlreadyShot();
+            return;
+        }
+
+        this.display.printMap(this);
+        this.display.printShoot(field);
+
+        if (this.isFinished())
+        {
+            this.display.printVictory();
+        }
     }
 
     boolean interactField(MapField field)

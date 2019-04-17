@@ -3,8 +3,12 @@ package pl.kliniewski.battleships;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapField;
@@ -13,8 +17,12 @@ import pl.kliniewski.battleships.ship.ShipTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class BattleShipsGameTests
 {
+    @Mock
+    private DisplayEngine display;
+
     private BattleShipsGame game;
 
     @BeforeEach
@@ -23,7 +31,7 @@ class BattleShipsGameTests
         Map map = new Map();
         map.addShip(new ShipTests.TestShip(new MapPosition(9, 9), MapDirection.VERTICAL_NEGATIVE));
 
-        this.game = new BattleShipsGame(map);
+        this.game = new BattleShipsGame(this.display, map);
     }
 
     @DisplayName("Check if parseMove method are correctly")
@@ -60,5 +68,34 @@ class BattleShipsGameTests
         this.game.interactField(this.game.getMap().getField(9, 7));
 
         assertEquals(1, this.game.getSunkenShips());
+    }
+
+    @Test
+    void executeMoveTest()
+    {
+        MapPosition position = new MapPosition(5, 5);
+
+        this.game.executeMove(position);
+        Mockito.verify(this.display, Mockito.never()).printFieldAlreadyShot();
+
+        this.game.executeMove(position);
+        Mockito.verify(this.display).printFieldAlreadyShot();
+
+        Mockito.verify(this.display).printMap(Mockito.any());
+        Mockito.verify(this.display).printShoot(Mockito.any());
+    }
+
+    @Test
+    @DisplayName("Check if executeMove method finish game after sunk all ships")
+    void executeMoveFinishAfterSunkShipsTest()
+    {
+        assertFalse(this.game.isFinished());
+
+        this.game.executeMove(new MapPosition(9, 9));
+        this.game.executeMove(new MapPosition(9, 8));
+        this.game.executeMove(new MapPosition(9, 7));
+
+        Mockito.verify(this.display).printVictory();
+        assertTrue(this.game.isFinished());
     }
 }

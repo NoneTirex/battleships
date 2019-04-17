@@ -6,13 +6,6 @@ import pl.kliniewski.battleships.ship.Ship;
 
 public class DisplayEngine
 {
-    private final BattleShipsGame game;
-
-    public DisplayEngine(BattleShipsGame game)
-    {
-        this.game = game;
-    }
-
     public void printIntro()
     {
         System.out.println("");
@@ -37,10 +30,10 @@ public class DisplayEngine
         System.out.println("");
     }
 
-    public void printMap()
+    public void printMap(BattleShipsGame game)
     {
-        MapField[][] fields = this.game.getMap().getFields();
-        this.printHeader();
+        MapField[][] fields = game.getMap().getFields();
+        this.printHeader(game);
         for (int x = 0; x < fields.length; x++)
         {
             MapField[] row = fields[x];
@@ -48,9 +41,9 @@ public class DisplayEngine
         }
     }
 
-    public void printHeader()
+    public void printHeader(BattleShipsGame game)
     {
-        System.out.printf("Sunken ships: %d\n", this.game.getSunkenShips());
+        System.out.printf("Sunken ships: %d\n", game.getSunkenShips());
         System.out.print(" ");
         for (int i = 0; i < Map.MAP_SIZE; i++)
         {
@@ -98,5 +91,15 @@ public class DisplayEngine
             return;
         }
         System.out.printf("Hit. %s.\n", ship.getName());
+    }
+
+    public void printFieldAlreadyShot()
+    {
+        System.out.println("The field is already shot");
+    }
+
+    public void printIncorrectMove(String input)
+    {
+        System.out.printf("Incorrect move! (your type: %s, example: A1)\n", input);
     }
 }
