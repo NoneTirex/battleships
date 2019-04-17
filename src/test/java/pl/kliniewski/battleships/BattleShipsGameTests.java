@@ -13,7 +13,7 @@ import pl.kliniewski.battleships.ship.ShipTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BattleShipsGameTests
+class BattleShipsGameTests
 {
     private BattleShipsGame game;
 

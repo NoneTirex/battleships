@@ -7,7 +7,7 @@ import pl.kliniewski.battleships.ship.ShipTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MapFieldTests
+class MapFieldTests
 {
     @Test
     @DisplayName("Check if field is shooted")

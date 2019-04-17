@@ -80,7 +80,7 @@ public class BattleShipsGame
         }
     }
 
-    public MapPosition parseMove(String coordinates)
+    MapPosition parseMove(String coordinates)
     {
         if (coordinates.length() != 2)
         {

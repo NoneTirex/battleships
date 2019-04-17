@@ -2,11 +2,12 @@ package pl.kliniewski.battleships.map;
 
 import pl.kliniewski.battleships.ship.Ship;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class MapBuilder
 {
-    private final Map map = new Map();
+    private final Map    map    = new Map();
+    private       Random random = new Random();
 
     public MapBuilder appendRandomBattleship()
     {
@@ -14,7 +15,7 @@ public class MapBuilder
         return this.appendRandomShip("Battleship", battleShipSize);
     }
 
-    private MapBuilder appendRandomShip(String name, int size)
+    MapBuilder appendRandomShip(String name, int size)
     {
         MapDirection direction = this.randomDirection();
         MapPosition position = this.randomPosition(size, direction);
@@ -22,16 +23,14 @@ public class MapBuilder
         return this;
     }
 
-    private MapDirection randomDirection()
+    MapDirection randomDirection()
     {
-        int index = ThreadLocalRandom.current().nextInt(MapDirection.values().length);
+        int index = this.random.nextInt(MapDirection.values().length);
         return MapDirection.values()[index];
     }
 
-    private MapPosition randomPosition(int size, MapDirection direction)
+    MapPosition randomPosition(int size, MapDirection direction)
     {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-
         MapPosition offset = direction.getPosition().multiple(size);
         int minX = Math.max(0, 0 - offset.getX());
         int maxX = Math.min(Map.MAP_SIZE, Map.MAP_SIZE - offset.getX());
@@ -40,12 +39,17 @@ public class MapBuilder
         MapPosition position;
         do
         {
-            int x = random.nextInt(minX, maxX);
-            int z = random.nextInt(minZ, maxZ);
+            int x = this.nextInt(minX, maxX);
+            int z = this.nextInt(minZ, maxZ);
 
             position = new MapPosition(x, z);
         } while (this.map.collidedOtherShips(position, size, direction));
         return position;
+    }
+
+    int nextInt(int origin, int bound)
+    {
+        return this.random.nextInt(bound - origin) + origin;
     }
 
     public MapBuilder appendRandomDestroyer()
@@ -57,5 +61,10 @@ public class MapBuilder
     public Map build()
     {
         return this.map;
+    }
+
+    void setRandom(Random random)
+    {
+        this.random = random;
     }
 }
