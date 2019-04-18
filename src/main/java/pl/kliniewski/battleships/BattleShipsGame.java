@@ -30,11 +30,6 @@ public class BattleShipsGame
         return sunkenShips;
     }
 
-    public boolean isFinished()
-    {
-        return this.map.isFinished();
-    }
-
     public static void main(String[] args)
     {
         MapBuilder mapBuilder = new MapBuilder();
@@ -55,6 +50,11 @@ public class BattleShipsGame
         }
     }
 
+    public boolean isFinished()
+    {
+        return this.map.isFinished();
+    }
+
     void preprocessInput(String line)
     {
         MapPosition position = this.parseMove(line);
@@ -68,14 +68,20 @@ public class BattleShipsGame
 
     MapPosition parseMove(String coordinates)
     {
-        if (coordinates.length() != 2)
+        if (coordinates.length() < 2)
         {
             return null;
         }
-        char[] chars = coordinates.toUpperCase().toCharArray();
-        int x = chars[0] - 'A';
-        int z = chars[1] - '0';
-
+        int x = coordinates.toUpperCase().toCharArray()[0] - 'A';
+        int z;
+        try
+        {
+            z = Integer.parseInt(coordinates.substring(1)) - 1;
+        }
+        catch (NumberFormatException ignored)
+        {
+            return null;
+        }
         if (x < 0 || x >= Map.MAP_SIZE || z < 0 || z >= Map.MAP_SIZE)
         {
             return null;
@@ -99,6 +105,18 @@ public class BattleShipsGame
         {
             this.display.printVictory();
         }
+    }
+
+    Integer parseInt(String input)
+    {
+        try
+        {
+            return Integer.parseInt(input);
+        }
+        catch (NumberFormatException ignored)
+        {
+        }
+        return null;
     }
 
     boolean interactField(MapField field)

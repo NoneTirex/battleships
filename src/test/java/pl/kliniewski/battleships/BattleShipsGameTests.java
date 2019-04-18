@@ -37,7 +37,7 @@ class BattleShipsGameTests
     @DisplayName("Check if parseMove method are correctly")
     @ParameterizedTest(name = "Coordinates {0} = ({1}, {2})")
     @CsvSource({
-                       "A0, 0, 0", "A1, 0, 1", "A9, 0, 9", "J0, 9, 0", "E5, 4, 5"
+                       "A2, 0, 1", "A1, 0, 0", "A10, 0, 9", "J1, 9, 0", "E5, 4, 4"
                })
     void parseMoveTest(String coordinates, int expectedX, int expectedZ)
     {
@@ -46,6 +46,14 @@ class BattleShipsGameTests
         assertNotNull(position);
         assertEquals(expectedX, position.getX());
         assertEquals(expectedZ, position.getZ());
+    }
+
+    @Test
+    void parseMoveIncorrectCoordinatesTest()
+    {
+        MapPosition position = this.game.parseMove("A11");
+
+        assertNull(position);
     }
 
     @Test

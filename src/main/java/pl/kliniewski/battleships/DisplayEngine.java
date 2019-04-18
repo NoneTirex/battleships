@@ -37,14 +37,14 @@ public class DisplayEngine
         for (int x = 0; x < fields.length; x++)
         {
             MapField[] row = fields[x];
-            this.printRow(x, row);
+            this.printRow(x + 1, row);
         }
     }
 
     public void printHeader(BattleShipsGame game)
     {
         System.out.printf("Sunken ships: %d\n", game.getSunkenShips());
-        System.out.print(" ");
+        System.out.print("  ");
         for (int i = 0; i < Map.MAP_SIZE; i++)
         {
             System.out.print(" | " + (char) ('A' + i));
@@ -54,7 +54,11 @@ public class DisplayEngine
 
     public void printRow(int index, MapField[] row)
     {
-        System.out.print((char) ('0' + index));
+        System.out.print(index);
+        if (index < 10)
+        {
+            System.out.print(" ");
+        }
         for (MapField field : row)
         {
             System.out.print(" | " + field.toChar());
