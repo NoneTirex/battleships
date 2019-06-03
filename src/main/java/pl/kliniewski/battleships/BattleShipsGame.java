@@ -12,8 +12,6 @@ public class BattleShipsGame
     private final DisplayEngine display;
     private final Map           map;
 
-    private int sunkenShips;
-
     public BattleShipsGame(DisplayEngine display, Map map)
     {
         this.display = display;
@@ -23,11 +21,6 @@ public class BattleShipsGame
     public Map getMap()
     {
         return map;
-    }
-
-    public int getSunkenShips()
-    {
-        return sunkenShips;
     }
 
     public static void main(String[] args)
@@ -92,14 +85,15 @@ public class BattleShipsGame
     void executeMove(MapPosition position)
     {
         MapField field = this.map.getField(position.getX(), position.getZ());
-        if (!this.interactField(field))
+        ShotResult result = field.shootField();
+        if (result == ShotResult.DUPLICATE)
         {
             this.display.printFieldAlreadyShot();
             return;
         }
 
         this.display.printMap(this);
-        this.display.printShoot(field);
+        this.display.printShot(field);
 
         if (this.isFinished())
         {
@@ -117,20 +111,5 @@ public class BattleShipsGame
         {
         }
         return null;
-    }
-
-    boolean interactField(MapField field)
-    {
-        if (field.isAlreadyHit())
-        {
-            return false;
-        }
-        field.shootField();
-
-        if (field.getShip() != null && field.getShip().isSunk())
-        {
-            this.sunkenShips++;
-        }
-        return true;
     }
 }

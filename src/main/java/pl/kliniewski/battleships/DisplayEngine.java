@@ -2,7 +2,6 @@ package pl.kliniewski.battleships;
 
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapField;
-import pl.kliniewski.battleships.ship.Ship;
 
 public class DisplayEngine
 {
@@ -43,7 +42,6 @@ public class DisplayEngine
 
     public void printHeader(BattleShipsGame game)
     {
-        System.out.printf("Sunken ships: %d\n", game.getSunkenShips());
         System.out.print("  ");
         for (int i = 0; i < Map.MAP_SIZE; i++)
         {
@@ -81,20 +79,20 @@ public class DisplayEngine
         System.out.println("                                           ");
     }
 
-    public void printShoot(MapField field)
+    public void printShot(MapField field)
     {
-        Ship ship = field.getShip();
-        if (ship == null)
+        field.getShip().ifPresentOrElse(ship ->
+        {
+            if (ship.isSunk())
+            {
+                System.out.printf("Hit and sink. %s.\n", ship.getName());
+                return;
+            }
+            System.out.printf("Hit. %s.\n", ship.getName());
+        }, () ->
         {
             System.out.println("Miss.");
-            return;
-        }
-        if (ship.isSunk())
-        {
-            System.out.printf("Hit and sink. %s.\n", ship.getName());
-            return;
-        }
-        System.out.printf("Hit. %s.\n", ship.getName());
+        });
     }
 
     public void printFieldAlreadyShot()

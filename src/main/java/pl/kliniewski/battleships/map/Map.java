@@ -2,6 +2,8 @@ package pl.kliniewski.battleships.map;
 
 import pl.kliniewski.battleships.ship.Ship;
 
+import java.util.Optional;
+
 public class Map
 {
     public static final int MAP_SIZE = 10;
@@ -34,7 +36,7 @@ public class Map
         MapPosition currentPosition = startPosition;
         for (int i = 0; i < size; i++)
         {
-            if (this.getField(currentPosition.getX(), currentPosition.getZ()).getShip() != null)
+            if (this.getField(currentPosition.getX(), currentPosition.getZ()).getShip().isPresent())
             {
                 return true;
             }
@@ -58,7 +60,7 @@ public class Map
         }
     }
 
-    public Ship getShip(int x, int z)
+    public Optional<Ship> getShip(int x, int z)
     {
         return this.getField(x, z).getShip();
     }
@@ -69,7 +71,7 @@ public class Map
         {
             for (MapField field : row)
             {
-                if (field.getShip() != null && !field.isAlreadyHit())
+                if (field.getShip().isPresent() && !field.isAlreadyHit())
                 {
                     return false;
                 }

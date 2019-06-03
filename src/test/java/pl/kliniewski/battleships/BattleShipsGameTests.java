@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.kliniewski.battleships.map.Map;
 import pl.kliniewski.battleships.map.MapDirection;
-import pl.kliniewski.battleships.map.MapField;
 import pl.kliniewski.battleships.map.MapPosition;
 import pl.kliniewski.battleships.ship.ShipTests;
 
@@ -43,9 +42,7 @@ class BattleShipsGameTests
     {
         MapPosition position = this.game.parseMove(coordinates);
 
-        assertNotNull(position);
-        assertEquals(expectedX, position.getX());
-        assertEquals(expectedZ, position.getZ());
+        assertEquals(new MapPosition(expectedX, expectedZ), position);
     }
 
     @Test
@@ -54,28 +51,6 @@ class BattleShipsGameTests
         MapPosition position = this.game.parseMove("A11");
 
         assertNull(position);
-    }
-
-    @Test
-    void interactFieldTest()
-    {
-        MapField field = this.game.getMap().getField(5, 5);
-
-        assertTrue(this.game.interactField(field));
-        assertTrue(field.isAlreadyHit());
-        assertFalse(this.game.interactField(field));
-    }
-
-    @Test
-    void interactFieldWithSunkenShipTest()
-    {
-        assertEquals(0, this.game.getSunkenShips());
-
-        this.game.interactField(this.game.getMap().getField(9, 9));
-        this.game.interactField(this.game.getMap().getField(9, 8));
-        this.game.interactField(this.game.getMap().getField(9, 7));
-
-        assertEquals(1, this.game.getSunkenShips());
     }
 
     @Test
@@ -90,7 +65,7 @@ class BattleShipsGameTests
         Mockito.verify(this.display).printFieldAlreadyShot();
 
         Mockito.verify(this.display).printMap(Mockito.any());
-        Mockito.verify(this.display).printShoot(Mockito.any());
+        Mockito.verify(this.display).printShot(Mockito.any());
     }
 
     @Test

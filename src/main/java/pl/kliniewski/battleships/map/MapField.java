@@ -1,6 +1,9 @@
 package pl.kliniewski.battleships.map;
 
+import pl.kliniewski.battleships.ShotResult;
 import pl.kliniewski.battleships.ship.Ship;
+
+import java.util.Optional;
 
 public class MapField
 {
@@ -18,9 +21,9 @@ public class MapField
         this.ship = ship;
     }
 
-    public Ship getShip()
+    public Optional<Ship> getShip()
     {
-        return ship;
+        return Optional.ofNullable(this.ship);
     }
 
     public boolean isAlreadyHit()
@@ -33,17 +36,19 @@ public class MapField
         this.alreadyHit = alreadyHit;
     }
 
-    public void shootField()
+    public ShotResult shootField()
     {
-        this.alreadyHit = true;
-        if (this.ship != null)
+        if (alreadyHit)
         {
-            this.ship.shootShip();
+            return ShotResult.DUPLICATE;
         }
+        alreadyHit = true;
+
+        return this.getShip().map(Ship::shootShip).orElse(ShotResult.SHOT);
     }
 
     public char toChar()
     {
-        return this.alreadyHit ? (this.ship != null ? 'X' : '.') : ' ';
+        return this.alreadyHit ? this.getShip().map(s -> 'X').orElse('.') : ' ';
     }
 }

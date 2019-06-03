@@ -2,6 +2,7 @@ package pl.kliniewski.battleships.ship;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.kliniewski.battleships.ShotResult;
 import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
 
@@ -15,7 +16,8 @@ public class ShipTests
     {
         TestShip testShip = new TestShip(new MapPosition(0, 0), MapDirection.HORIZONTAL_POSITIVE);
 
-        testShip.shootShip();
+        assertEquals(ShotResult.SHOT, testShip.shootShip());
+
         assertEquals(1, testShip.getReceivedShots());
         assertFalse(testShip.isSunk());
     }
@@ -26,10 +28,10 @@ public class ShipTests
     {
         TestShip testShip = new TestShip(new MapPosition(0, 0), MapDirection.HORIZONTAL_POSITIVE);
 
-        for (int i = 0; i < 3; i++)
-        {
-            testShip.shootShip();
-        }
+        assertEquals(ShotResult.SHOT, testShip.shootShip());
+        assertEquals(ShotResult.SHOT, testShip.shootShip());
+        assertEquals(ShotResult.SUNK, testShip.shootShip());
+
         assertEquals(3, testShip.getReceivedShots());
         assertTrue(testShip.isSunk());
     }

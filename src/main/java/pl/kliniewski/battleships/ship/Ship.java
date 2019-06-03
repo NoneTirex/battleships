@@ -1,5 +1,6 @@
 package pl.kliniewski.battleships.ship;
 
+import pl.kliniewski.battleships.ShotResult;
 import pl.kliniewski.battleships.map.MapDirection;
 import pl.kliniewski.battleships.map.MapPosition;
 
@@ -45,12 +46,10 @@ public class Ship
         return receivedShots;
     }
 
-    public void shootShip()
+    public ShotResult shootShip()
     {
-        if (!this.isSunk())
-        {
-            this.receivedShots++;
-        }
+        this.receivedShots++;
+        return this.isSunk() ? ShotResult.SUNK : ShotResult.SHOT;
     }
 
     public boolean isSunk()

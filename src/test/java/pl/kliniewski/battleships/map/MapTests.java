@@ -17,9 +17,9 @@ class MapTests
         Map map = new Map();
         map.addShip(ship);
 
-        assertEquals(ship, map.getShip(5, 5));
-        assertEquals(ship, map.getShip(4, 5));
-        assertEquals(ship, map.getShip(3, 5));
+        assertEquals(ship, map.getShip(5, 5).orElse(null));
+        assertEquals(ship, map.getShip(4, 5).orElse(null));
+        assertEquals(ship, map.getShip(3, 5).orElse(null));
     }
 
     @Test
